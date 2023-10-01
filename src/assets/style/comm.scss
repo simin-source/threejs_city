@@ -1,0 +1,17 @@
+$font_color_fff: #ffffff;
+$font_color_222: #222222;
+$font_color_999: #999999;
+
+$border_color_fff: #ffffff;
+
+$bg_color_222: #222222;
+$bg_color_fff: #ffffff;
+$bg_color_faac: #fafafc;
+$bg_color_opacity_1: #091d55;
+
+$base_color_blue: #5781ff;
+$base_color_gray: #d6dde2;
+
+@mixin boxShadow($opacity: 0.8, $radius: 10) {
+    box-shadow: 0 0 $radius+px 0 rgba(75, 75, 75, $opacity);
+}
