@@ -1,8 +1,12 @@
 import { color } from '../config';
-import { Cylinder } from '../effect/cylinder';
+import { Cylinder } from './cylinder';
 
 export class Circle {
-    constructor(scene, time) {
+    config: {
+        radius: number; height: number; open: boolean; 
+        color: string; opacity: number; position: { x: number; y: number; z: number; }; speed: number;
+    };
+    constructor(scene: any, time: { value: number; }) {
         // 圆基本配置
         this.config = {
             radius: 50,

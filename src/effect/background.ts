@@ -1,9 +1,11 @@
-import * as THREE from 'three'
+import * as THREE from 'three';
 
 export class Background {
-  constructor(scene) {
+  scene: any;
+  url: string;
+  constructor(scene: any) {
     this.scene = scene;
-    this.url = '../../src/assets/img/black-bg.png';
+    this.url = '/img/black-bg.png';
 
     this.init();
   }

@@ -1,16 +1,33 @@
 import * as THREE from 'three';
 import { color } from '../config';
 
-export class Cylinder {
+export class Ball {
+    scene: any;
+    time: any;
+    config: {
+        radius: number; height: number;
+        color: string; opacity: number; position: { x: number; y: number; z: number; }; speed: number;
+    };
     //扩散集合体
-    constructor(scene, time) {
+    constructor(scene: any, time: any) {
         this.scene = scene;
         this.time = time;
 
+        // 球基本配置
+        this.config = {
+            radius: 30,
+            height: 60,// 高度大于半径展示圆
+            color: color.ball,
+            opacity: 0.6,
+            position: { x: 300, y: 0, z: -200 },
+            speed: 3.0,
+        };
+
+        this.createSphere(this.config);
     }
-    createCylinder(options) {
-        //圆柱
-        const geometry = new THREE.CylinderGeometry(options.radius, options.radius, options.height, 32, 1, options.open);//顶,底,高,顶间隙,底间隙,是否打开顶部
+    createSphere(options: { radius: any; height: number; color: any; opacity: any; speed: any; position: any; }) {
+        //球
+        const geometry = new THREE.SphereGeometry(options.radius, 32, 32, Math.PI / 2, Math.PI * 2, 0, Math.PI / 2);//radius,ws,hs,phlstart,phllenght,thetastart,thetalength
 
         geometry.translate(0, options.height / 2, 0); // 使几何体沿y轴移动
         const material = new THREE.ShaderMaterial({
@@ -20,9 +37,6 @@ export class Cylinder {
                 },
                 u_opacity: {
                     value: options.opacity
-                },
-                u_radius: {
-                    value: options.radius
                 },
                 u_height: {
                     value: options.height

@@ -1,8 +1,10 @@
 import * as THREE from 'three'
 import { color } from '../config'
 
-export class Fly {
-    constructor(scene, time) {
+export class Road {
+    scene: any;
+    time: { value: number; };
+    constructor(scene: any, time: { value: number; }) {
         this.scene = scene;
         this.time = time;
 
@@ -19,52 +21,37 @@ export class Fly {
                 y: 0,
                 z: -240,
             },
-            range: 200, // 飞线长度
-            height: 300, // 飞线高度
+            range: 200,
             color: color.fly,
             size: 30,
+            length:400,// 粒子数量
         })
     }
 
-    createFly(options) {
-        // 起始点
-        const source = new THREE.Vector3(
-            options.source.x,
-            options.source.y,
-            options.source.z,
-        )
-        // 终止点
-        const target = new THREE.Vector3(
-            options.target.x,
-            options.target.y,
-            options.target.z,
-        )
-        // 通过起始点和终止点来计算中心位置
-        const center = target.clone().lerp(source, 0.5);
-        // 设置中心位置的高度
-        center.y += options.height;
-
-        // 起点到终点的距离
-        const len = parseInt(source.distanceTo(target));
-
-        // 添加好了贝塞尔曲线运动
-        const curve = new THREE.QuadraticBezierCurve3(
-            source, center, target
-        )
+    createFly(options:any) {
+        // 路径
+        const curve = new THREE.CatmullRomCurve3([
+            new THREE.Vector3(-320, 0, 160),
+            new THREE.Vector3(-150, 0, -40),
+            new THREE.Vector3(-10, 0, -35),
+            new THREE.Vector3(40, 0, 40),
+            new THREE.Vector3(30, 0, 150),
+            new THREE.Vector3(-100, 0, 310),
+        ])
 
         // 获取粒子
-        const points = curve.getPoints(len);
+        const points = curve.getPoints(options.length);
 
-        const positions = [];//粒子坐标集合
-        const aPositions = [];//粒子索引集合
-        points.forEach((item, index) => {
+        const positions: any[] = []
+        const aPositions: any[] = []
+        points.forEach((item: { x: any; y: any; z: any; }, index: any) => {
             positions.push(item.x, item.y, item.z)
             aPositions.push(index)
         })
 
-        const geometry = new THREE.BufferGeometry();//空几何图形
+        const geometry = new THREE.BufferGeometry();
 
-        geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))//第二参数表示获取数据数量
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
         geometry.setAttribute('a_position', new THREE.Float32BufferAttribute(aPositions, 1))
 
         const material = new THREE.ShaderMaterial({
@@ -78,9 +65,8 @@ export class Fly {
                 u_size: {
                     value: options.size
                 },
-                //粒子数量
                 u_total: {
-                    value: len,
+                    value: options.length,
                 },
                 u_time: this.time,
             },
@@ -100,10 +86,9 @@ export class Fly {
                     
                     if (total_number > a_position && total_number < a_position + u_range) {
                     
-                        // 拖尾效果,超出范围的大小为0
+                        // 拖尾效果
                         float index = (a_position + u_range - total_number) / u_range;
                         size *= index;
-                        
                         
                         v_opacity = 1.0;
                     } else {
@@ -122,8 +107,8 @@ export class Fly {
                     gl_FragColor = vec4(u_color, v_opacity);
                 }
             `,
-            transparent: true, // 使得着色器支持透明度
-        });
+            transparent: true,
+        })
 
         const point = new THREE.Points(geometry, material);
 

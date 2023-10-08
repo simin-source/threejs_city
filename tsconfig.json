@@ -36,7 +36,7 @@
       "src/**/*.d.ts",
       "src/**/*.tsx",
       "src/**/*.vue"
-, "src/utils/city.js", "src/utils/init.js"  ],
+, "src/utils/city.ts", "src/utils/init.ts"  ],
   "exclude": [
       "node_modules",
       "./**/*.js"

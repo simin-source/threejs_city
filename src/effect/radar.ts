@@ -2,7 +2,9 @@ import * as THREE from 'three';
 import { color } from '../config';
 
 export class Radar {
-    constructor(scene, time) {
+    scene: any;
+    time: { value: number; };
+    constructor(scene: any, time: { value: number; }) {
         this.scene = scene;
         this.time = time;
 

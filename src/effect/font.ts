@@ -3,7 +3,9 @@ import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 
 export class Font{
-  constructor(scene) {
+  scene: any;
+  font: any;
+  constructor(scene: any) {
     this.scene = scene;
     this.font = null;
 
@@ -47,7 +49,7 @@ export class Font{
       this.createText(item);
     })
   }
-  createText(data){
+  createText(data:any){
     const geometry = new TextGeometry(data.text, {
       font: this.font,
       size: 20,

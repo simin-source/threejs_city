@@ -1,8 +1,11 @@
 import * as THREE from 'three'
 import { color } from '../config'
 
-export class Cone{
-  constructor(scene, top, height) {
+export class Cone {
+  scene: any;
+  top: { value: number; };
+  height: { value: number; };
+  constructor(scene: any, top: { value: number; }, height: { value: number; }) {
     this.scene = scene;
 
     // 变化值
@@ -22,7 +25,7 @@ export class Cone{
     })
   }
 
-  createCone(options) {
+  createCone(options:any) {
     const geometry = new THREE.ConeGeometry(
       15,
       30,

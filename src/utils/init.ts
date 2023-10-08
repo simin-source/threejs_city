@@ -4,23 +4,24 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 export const initCity = () => {
     // 1、获取canvas
-    const canvas = document.getElementById('webgl');
+    const canvas = document.getElementById('webgl') as HTMLElement;
     // 2、场景
     const scene = new THREE.Scene();
     // 3、相机（透视）
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 100000);
-    camera.position.set(1000, 500, 100)
+    camera.position.set(1000, 500, 100);
     scene.add(camera);
     // 添加相机控件-轨迹
     const controls = new OrbitControls(camera, canvas);
     // 是否有惯性
     controls.enableDamping = true;
     // 是否可以缩放
-    controls.enableZoom = true;
+    // controls.enableZoom = true;
+    controls.enableZoom = false; // 采用鼠标滚轮
     // 最近和最远距离
     controls.minDistance = 100;
     controls.maxDistance = 2000;
-    // 开启右键拖动
+    // 开启右键拖动, 处理场景偏移问题
     controls.enablePan = true;
     // 4、灯光
     scene.add(new THREE.AmbientLight(0xadadad));//环境光
@@ -35,7 +36,7 @@ export const initCity = () => {
     // 背景色
     renderer.setClearColor(new THREE.Color(0x000000), 1);
 
-    const city = new City(scene, camera);
+    const city = new City(scene, camera, controls);
 
     const clock = new THREE.Clock();
 

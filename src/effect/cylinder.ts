@@ -1,52 +1,48 @@
 import * as THREE from 'three';
 import { color } from '../config';
 
-export class Wall {
-    constructor(scene, time) {
+export class Cylinder {
+    scene: any;
+    time: { value: number; };
+    //扩散集合体
+    constructor(scene: any, time: { value: number; }) {
         this.scene = scene;
         this.time = time;
 
-        // 圆柱基本配置
-        this.config = {
-            radius: 50,
-            height: 50,
-            open: true,//是否打开顶部
-            color: color.wall,
-            opacity: 0.6,
-        };
-
-        this.init();
     }
-    init() {
+    createCylinder(options:any) {
         //圆柱
-        const geometry = new THREE.CylinderGeometry(this.config.radius, this.config.radius, this.config.height, 32, 1, this.config.open);//顶,底,高,顶间隙,底间隙,是否打开顶部
+        const geometry = new THREE.CylinderGeometry(options.radius, options.radius, options.height, 32, 1, options.open);//顶,底,高,顶间隙,底间隙,是否打开顶部
 
-        geometry.translate(0, this.config.height / 2, 0); // 使几何体沿y轴移动
+        geometry.translate(0, options.height / 2, 0); // 使几何体沿y轴移动
         const material = new THREE.ShaderMaterial({
             uniforms: {
                 u_color: {
-                    value: new THREE.Color(this.config.color)
+                    value: new THREE.Color(options.color)
                 },
                 u_opacity: {
-                    value: this.config.opacity
-                },
-                u_radius: {
-                    value: this.config.radius
+                    value: options.opacity
                 },
                 u_height: {
-                    value: this.config.height
+                    value: options.height
                 },
                 //变化值
                 u_time: this.time,
+                //扩散速度
+                u_speed: {
+                    value: options.speed ? options.speed : 1.0,
+                },
             },
             vertexShader: `
                 uniform float u_time;
                 uniform float u_height;
+                uniform float u_speed;
 
                 varying float v_opacity;
 
                 void main() {
-                    vec3 v_position=position *mod(u_time,1.0);
+                    // vec3 v_position=position *mod(u_time,1.0); 
+                    vec3 v_position=position *mod(u_time / u_speed,1.0);
 
                     // 渐变透明度(与高度有关)
                     // v_opacity=position.y / u_height;
@@ -73,7 +69,7 @@ export class Wall {
         });
 
         const mesh = new THREE.Mesh(geometry, material);
-        mesh.position.set(0, 0, 0);
+        mesh.position.copy(options.position);
 
         this.scene.add(mesh);
     }
