@@ -50,7 +50,7 @@ export class Snow {
     // 材质
     this.material = new THREE.PointsMaterial({
       size: 30,
-      map: new THREE.TextureLoader().load('/src/assets/img/snow.png'),
+      map: new THREE.TextureLoader().load('/snow.png'),
       transparent: true,
       opacity: 0.8,
       depthTest: false,

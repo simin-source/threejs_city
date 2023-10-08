@@ -5,7 +5,7 @@ export class Background {
   url: string;
   constructor(scene: any) {
     this.scene = scene;
-    this.url = '/img/black-bg.png';
+    this.url = '/black-bg.png';
 
     this.init();
   }

@@ -57,7 +57,7 @@ export class City {
     }
     loadCity() {
         // 加载模型，并渲染到画布上
-        loadFBX('/model/beijing.fbx').then((object:any) => {
+        loadFBX('/beijing.fbx').then((object:any) => {
             // console.log(object);// 返回组对象Group
             // this.scene.add(object);
             // 遍历场景中的所有几何体数据
