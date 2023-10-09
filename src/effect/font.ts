@@ -13,7 +13,7 @@ export class Font{
   }
   init() {
     const loader = new FontLoader()
-    loader.load('/font.json', (font) => {
+    loader.load('./font.json', (font: any) => {
       this.font = font;
 
       // 创建字体信息

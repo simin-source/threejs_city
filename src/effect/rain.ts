@@ -21,7 +21,7 @@ export class Rain {
       setPosition(position) {
         position.speedY = 20
       },
-      url: '/rain.png',
+      url: './img/rain.png',
     })
     // this.scene = scene;
 
@@ -39,7 +39,7 @@ export class Rain {
   //   // 创建粒子
   //   this.material = new THREE.PointsMaterial({
   //     size: 10,
-  //     map: new THREE.TextureLoader().load('/rain.png'),
+  //     map: new THREE.TextureLoader().load('./img/rain.png'),
   //     transparent: true,
   //     opacity: 0.4,
   //     depthTest: false,

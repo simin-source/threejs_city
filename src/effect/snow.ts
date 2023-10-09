@@ -30,7 +30,7 @@ export class Snow {
     //     position.speedY = Math.random() + 4;
     //     position.speedZ = Math.random() - 0.5;
     //   },
-    //   url: '/snow.png',
+    //   url: './img/snow.png',
     // })
     this.scene = scene;
     // 范围
@@ -50,7 +50,7 @@ export class Snow {
     // 材质
     this.material = new THREE.PointsMaterial({
       size: 30,
-      map: new THREE.TextureLoader().load('/snow.png'),
+      map: new THREE.TextureLoader().load('./img/snow.png'),
       transparent: true,
       opacity: 0.8,
       depthTest: false,
